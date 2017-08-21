@@ -1,0 +1,76 @@
+#flashMessage{
+	z-index:100000!important;
+}
+
+#flashMessage.message, #authMessage.message{
+	z-index:10000!important;
+	width:240px;
+	min-height:30px;
+	padding-left:15px!important;
+	padding-top:10px;
+	padding-right:10px;
+	padding-bottom:10px;
+	color:#fff;
+	position:fixed;
+	right:20px;
+	top:60px;
+	z-index:100;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	-webkit-box-shadow: 1px 3px 16px -1px rgba(0,0,0,0.75);
+	-moz-box-shadow: 1px 3px 16px -1px rgba(0,0,0,0.75);
+	box-shadow: 1px 3px 16px -1px rgba(0,0,0,0.75);
+	-webkit-transition: width 2s; /* Safari */
+    transition: width 2s;
+	cursor:pointer;
+}
+
+#flashMessage.message.success{
+	z-index:10000!important;
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#3F9C35+0,21ba45+51 */
+background: #3F9C35; /* Old browsers */
+background: -moz-linear-gradient(top,  #3F9C35 0%, #21ba45 51%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #3F9C35 0%,#21ba45 51%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #3F9C35 0%,#21ba45 51%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3F9C35', endColorstr='#21ba45',GradientType=0 ); /* IE6-9 */
+}
+
+#flashMessage.message.default{
+	z-index:1000!important;
+	background: rgba(73,155,234,1);
+	background: -moz-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%);
+	background: -webkit-gradient(left top, right top, color-stop(0%, rgba(73,155,234,1)), color-stop(100%, rgba(32,124,229,1)));
+	background: -webkit-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%);
+	background: -o-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%);
+	background: -ms-linear-gradient(left, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%);
+	background: linear-gradient(to right, rgba(73,155,234,1) 0%, rgba(32,124,229,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#499bea', endColorstr='#207ce5', GradientType=1 );
+}
+
+#flashMessage.message.error, #authMessage.message{
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#E64A0E+0,cc0000+100;Red+Flat */
+background: #E64A0E; /* Old browsers */
+background: -moz-linear-gradient(top,  #E64A0E 0%, #E64A0E 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #E64A0E 0%,#E64A0E 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #E64A0E 0%,#E64A0E 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E64A0E', endColorstr='#E64A0E',GradientType=0 ); /* IE6-9 */
+}
+
+.grande{
+	font-size:22px;	
+}
+
+#flashMessage.message .glyphicon{
+	margin-right:5px!important;
+}
+
+@media (max-width: 768px) {
+  	.#flashMessage.message{
+  		display: none;
+  	}
+
+  	#flashMessage.alert{
+  		display: block;
+  	}
+}
