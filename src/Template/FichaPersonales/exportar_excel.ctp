@@ -34,12 +34,13 @@
         </thead>
         <tbody>
             
-            <?php 
+            <?php
+            $i= 1; 
             foreach ($fichaPersonales as $ficha): 
                 
             ?> 
             <tr>
-                <td><?= $this->Number->format($ficha->id) ?></td>
+                <td><?= h($i); ?></td>
                 <td><?= h($ficha->user['name'].' '.$ficha->user['apellido1']) ?></td>
                 <td><?= h($ficha->empresa['name']) ?></td>
                 <td><?= h($ficha->area['name']) ?></td>
@@ -48,7 +49,9 @@
                 <td><?= h($ficha->telefono) ?></td>
                 <td><?= h($ficha->celular) ?></td>
             </tr>
-            <?php endforeach; ?>
+            <?php 
+            $i++;
+            endforeach; ?>
         </tbody>
     </table>
     </div>

@@ -51,18 +51,30 @@
 	           		<td> <?= h($contacto->entidade['name']) ?> </td>
 	           		<td> <?= h($contacto->name) ?> </td>
 	           		<td> <?= h($contacto->email) ?> </td>
-	           		<td> <?= h($contacto->cargo) ?> </td>
+	           		<td> <?= h($contacto->telefono) ?> </td>
 	           		<td> <?= h($contacto->cargo) ?> </td>
 	           		<td> <?= h($contacto->descripcion) ?> </td>
 	           		<td> <?= h($contacto->nacionalidad) ?> </td>
 	           		<td style="text-align: center;"><?= $estado;  ?></td>
 	           		 <td style="text-align: center;">
                     
-
+                      <?php if(in_array(75, $permisos2)) {?>
                         <a class="btn btn-success btn-xs" href="<?php echo APP_URI; ?>Contactos/activar/<?php echo $contacto->id; ?>" data-toggle="tooltip" data-placement="center" title="Activar"><i class="glyphicon glyphicon-ok"></i></a>
-                        <a class="btn btn-warning btn-xs" href="javascript:editModal(<?php echo $contacto->id;?> , '<?php echo $contacto->name;?>')" data-toggle="tooltip" data-placement="left" title="Editar"><i class="glyphicon glyphicon-edit"></i></a>
+                      <?php }else{ ?>
+                          <a class="btn btn-success btn-xs" disabled href="#" data-toggle="tooltip" data-placement="center" title="Activar"><i class="glyphicon glyphicon-ok"></i></a>
+                      <?php } ?>
 
+                      <?php if(in_array(78, $permisos2)) {?>
+                        <a class="btn btn-warning btn-xs" href="javascript:editModal(<?php echo $contacto->id;?> , '<?php echo $contacto->name;?>')" data-toggle="tooltip" data-placement="left" title="Editar"><i class="glyphicon glyphicon-edit"></i></a>
+                      <?php }else{ ?>
+                          <a class="btn btn-warning btn-xs" disabled href="#" data-toggle="tooltip" data-placement="left" title="Editar"><i class="glyphicon glyphicon-edit"></i></a>
+                      <?php } ?>
+
+                      <!--<?php if(in_array(123, $permisos2)) {?>
                          <a class="btn btn-danger btn-xs" href="javascript:delModal(<?php echo $contacto->id;?> , '<?php echo $contacto->name;?>')" data-toggle="tooltip" data-placement="left" title="Desactivar"><i class="glyphicon glyphicon-trash"></i></a>
+                      <?php }else{?>
+                         <a class="btn btn-danger btn-xs" disabled href="#" data-toggle="tooltip" data-placement="left" title="Desactivar"><i class="glyphicon glyphicon-trash"></i></a>
+                      <?php } ?> -->
 
                         
                     </td>

@@ -45,11 +45,15 @@ class FichaPersonalesController extends AppController
      * @return \Cake\Network\Response|null
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($id = null , $idcalendario = null)
     {
-        $fichaPersonale = $this->FichaPersonales->get($id, [
+        if(isset($id) && is_numeric($id))
+        {
+            $fichaPersonale = $this->FichaPersonales->get($id, [
             'contain' => ['Users', 'Empresas', 'TipoMovimientos', 'Areas', 'Cargos', 'Paises', 'Ciudades', 'Comunas', 'TipoCuentas', 'Bancos', 'Afps', 'Isapres', 'JefeAreas']
-        ]);
+            ]);    
+        }
+        
 
         $fichaPersonale['fecha_nacimiento'] = isset($fichaPersonale['fecha_nacimiento']) && $fichaPersonale['fecha_nacimiento']!='' ?  $this->formatDateViewC($fichaPersonale['fecha_nacimiento']) : '';
 
@@ -57,6 +61,10 @@ class FichaPersonalesController extends AppController
 
         $user['modified'] = isset($user['modified']) && $user['modified']!='' ?  $this->formatDateViewC($user['modified']) : '';
 
+        if(isset($idcalendario) && is_numeric($idcalendario))
+        {
+            $this->set(compact('idcalendario'));            
+        }
 
         $this->set('fichaPersonale', $fichaPersonale);
         $this->set('_serialize', ['fichaPersonale']);
@@ -65,8 +73,13 @@ class FichaPersonalesController extends AppController
     public function anexo()
     {
         $fichaPersonales = $this->FichaPersonales->find('all')
-                        ->contain(['Users' , 'Empresas','Areas' ,'Cargos'])->order(['Users.name'=>'ASC']);
+                        ->contain(['Users' , 'Empresas','Areas' ,'Cargos']) ->where(['Users.active' => 1])->order(['Users.name'=>'ASC']);
 
+        $this->loadModel('Digis');
+        $digi = $this->Digis->find('all')->where(['Digis.user_id' => $this->_getUser()])->order(['id' => 'DESC'])->limit(1)->toArray();
+        //var_dump($digi[0]['id']); die;
+
+        $this->set('digi', $digi); 
         $this->set(compact('fichaPersonales'));
         $this->set('_serialize', ['fichaPersonales']);
     }
@@ -488,9 +501,12 @@ class FichaPersonalesController extends AppController
     {
      $this->viewBuilder()->layout(false);
 
-         $fichaPersonales = $this->FichaPersonales->find('all')
-                        ->contain(['Users' , 'Empresas','Areas' ,'Cargos']);
+         /*$fichaPersonales = $this->FichaPersonales->find('all')
+                        ->contain(['Users' , 'Empresas','Areas' ,'Cargos']);*/
                         //->order(['Fichas.id' => 'DESC']);
+
+        $fichaPersonales = $this->FichaPersonales->find('all')
+                        ->contain(['Users' , 'Empresas','Areas' ,'Cargos']) ->where(['Users.active' => 1])->order(['Users.name'=>'ASC']);
 
         
 

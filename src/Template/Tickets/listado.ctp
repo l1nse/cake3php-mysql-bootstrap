@@ -97,6 +97,8 @@
                 }else{
                     $td_class = '';
                 }
+
+                $date = $ticket->created;
             ?>
             <tr class="<?php echo $td_class; ?>">
                 <td><?= $this->Number->format($ticket->id) ?></td>
@@ -105,7 +107,7 @@
                 <td><?= h($ticket->user->name.' '.$ticket->user->apellido1) ?></td>
                 <td><?= h($ticket->user_asignado->name.' '.$ticket->user_asignado->apellido1) ?></td>
                 <td><?= h($ticket->asunto) ?></td>
-                <td><?= h($ticket->created) ?></td>
+                <td><?= $date->format('d/m/Y'); ?></td>
                 <td><?= $prioridad; ?></td>
                 <td><?= $estado; ?></td>
                 <td class="actions" style="text-align: center;">

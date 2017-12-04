@@ -10,10 +10,11 @@
     <fieldset>
     <div class="form-group">
         <legend><?= __('Crear Empresa') ?></legend>
+        <div class="alert alert-success" role="alert">Los campos marcados con <b>(*)</b> son obligatorios.</div>
         <?php
-            echo $this->Form->control('Nombre' ,["id" => "name", "name" => "name", "class" => "form-control", "value" => $empresa['name'], "required" => true]);
-            echo $this->Form->control('Rut',["id" => "rut", "name" => "rut", "class" => "form-control", "value" => $empresa['rut'], "required" => true]);
-            echo $this->Form->control('Nombre Softland',["id" => "name_softland", "name" => "name_softland", "class" => "form-control", "value" => $empresa['name_softland'], "required" => true]);
+            echo $this->Form->control('Nombre (*)' ,["id" => "name", "name" => "name", "class" => "form-control", "value" => $empresa['name'], "required" => true]);
+            echo $this->Form->control('Rut (*)',["id" => "rut", "name" => "rut", "class" => "form-control", "value" => $empresa['rut'], "required" => true]);
+            echo $this->Form->control('Nombre Softland (*)',["id" => "name_softland", "name" => "name_softland", "class" => "form-control", "value" => $empresa['name_softland'], "required" => true]);
             ;
         ?>
         </fieldset>

@@ -34,6 +34,8 @@
                         $estado =  '<span class="label label-danger">Inactivo</span>';
                     }elseif ($user->active=='0') {
                         $estado =  '<span class="label label-warning">Pendiente</span>';
+                    }elseif ($user->active=='4') {
+                        $estado =  '<span class="label label-info">Editada</span>';
                     }
                     else{
                         $estado =  '';
@@ -45,7 +47,7 @@
                 <td><?= $this->Number->format($user->id) ?></td>
                 <td><?= h($user->username) ?></td>
                 <td><?= h($user->name.' '.$user->apellido1.' '.$user->apellido2) ?></td>
-                <td><?= h($user->role) ?></td>
+                <td><?= h($user->role['name']) ?></td>
                 <td><?= h($user->modified) ?></td>
                 <td style="text-align: center;"><?= $estado;  ?></td>
                 <td class="actions">

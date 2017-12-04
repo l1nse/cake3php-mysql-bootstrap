@@ -9,60 +9,59 @@
 
     
     <?= $this->Form->create($fichaPersonale) ?>
+    
     <input type="hidden" id="area_hidden" name="area_hidden" value="<?php echo $fichaPersonale['area_id']; ?>">
     <input type="hidden" id="cargo_hidden" name="cargo_hidden" value="<?php echo $fichaPersonale['cargo_id']; ?>">
     <fieldset>
         <div class="form-group">
             <legend><?= __('Editar Ficha Personal') ?></legend>
-          <div class="form-group">
-        <?php
-            echo(" <u> <strong>Datos obligatorios : </u> </strong><br><br> ");
-            //echo $this->Form->control('empresa_id', ['options' => $empresas, 'empty' => true, "class" => 'form-control']);
-             ?>
+            <div class="alert alert-success" role="alert">Los campos marcados con <b>(*)</b> son obligatorios.</div>
             <div class="form-group">
-              <?php
-            echo $this->Form->control('empresa_id', ['options' => $empresas, 'empty' => true, "class" => 'form-control', 'required' => true , 'id' => 'empresa_id', 'name' => 'empresa_id']);
-            ?>
-                
-                
-            </div>
-        </div>
-
-        <div class="form-group">
-            <?php
-
-                echo $this->Form->control('Área', [ 'id' => 'area_id', 'options' => $areas ,'name' => 'area_id', 'empty' => true, "class" => 'form-control']);
-            ?>
-        </div>
-        <div class="form-group">
                 <?php
-                    echo $this->Form->control('Cargo_id', [ 'empty' => true, 'id' => 'cargo_id', 'value' => $fichaPersonale->area['name'] ,'name' => 'cargo_id','options' => $cargos ,"class" => 'form-control']);
+                    echo(" <u> <strong>Datos obligatorios : </u> </strong><br><br> ");
+                    //echo $this->Form->control('empresa_id', ['options' => $empresas, 'empty' => true, "class" => 'form-control']);
+                 ?>
+                <div class="form-group">
+                <?php
+                    echo $this->Form->control('Empresa (*)', ['empty' => true, 'value' => $fichaPersonale['empresa_id'], 'options' => $empresas ,  'id' => 'empresa_id', 'required' => true ,'name' => 'empresa_id', "class" => 'form-control']);
                 ?>
-        </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <?php
+
+                    echo $this->Form->control('Área (*)', ["empty" => true, 'options' => $areas ,'value' => $fichaPersonale['area_id'] ,'id' => 'area_id', 'required' => true,  'name' => 'area_id',  "class" => 'form-control', ]);
+                ?>
+            </div>
+            <div class="form-group">
+                    <?php
+                        echo $this->Form->control('Cargo (*)', [ 'empty' => true, 'options' => $cargos , 'id' => 'cargo_id', 'required' => true ,'name' => 'cargo_id',"class" => 'form-control']);
+                    ?>
+            </div>
 
          
-        <?php
-                
-             
+            <?php
+                    
+                 
 
-                echo $this->Form->control('tipo_movimiento_id', ["id" => "tipo_movimiento_id", "name" => "tipo_movimiento_id", "class" => "form-control", "value" => $fichaPersonale['tipo_movimiento_id']]);
-                
+                    echo $this->Form->control('tipo_movimiento (*) ' , ['options' => $tipoMovimientos, "id" => "tipo_movimiento_id", 'required' => true, "name" => "tipo_movimiento_id", "class" => "form-control", "value" => $fichaPersonale['tipo_movimiento_id']] );
+                    
 
 
-                echo(" <strong><br><br>  <u> Antecedentes personales : </u> </strong> <br><br> ");
+                    echo(" <strong><br><br>  <u> Antecedentes personales : </u> </strong> <br><br> ");
 
-                echo $this->Form->control('Nombre' , ["id" => "name", "name" => "name", "class" => "form-control", "value" => $fichaPersonale['name']]);
+                    echo $this->Form->control('Nombre (*)' , ["id" => "name", "name" => "name", "class" => "form-control", "value" => $fichaPersonale['name'], 'required' => true]);
 
-                echo $this->Form->control('Apellido Paterno',["id" => "apellido1", "name" => "apellido1", "class" => "form-control", "value" => $fichaPersonale->user['apellido1']]);
+                    echo $this->Form->control('Apellido Paterno (*)',["id" => "apellido1", "name" => "apellido1", "class" => "form-control", "value" => $fichaPersonale->user['apellido1'], 'required' => true]);
 
-                echo $this->Form->control('Apellido Materno',["id" => "apellido2", "name" => "apellido2", "class" => "form-control", "value" => 
-                    $fichaPersonale->user['apellido2']]);
+                    echo $this->Form->control('Apellido Materno',["id" => "apellido2", "name" => "apellido2", "class" => "form-control", "value" => 
+                        $fichaPersonale->user['apellido2']]);
 
-                echo $this->Form->control('email',["id" => "email", "name" => "email", "class" => "form-control", 'disabled' => true , "value" => $fichaPersonale['email']]);
+                    echo $this->Form->control('email',["id" => "email", "name" => "email", "class" => "form-control", 'disabled' => true , "value" => $fichaPersonale['email']]);
 
-                echo $this->Form->control('rut (*)', ["class" => 'form-control', 'id' => 'rut', 'name' => 'rut' , 'value' => $fichaPersonale['rut']]);
-
-                ?>
+                    echo $this->Form->control('rut (*)', ["class" => 'form-control rut', 'id' => 'rut', 'name' => 'rut' , 'value' => $fichaPersonale['rut']]);
+            ?>
 
 
                 
@@ -95,7 +94,7 @@
                 echo $this->Form->control('ciudade_id', ["id" => "ciudade_id", "name" => "ciudade_id", "class" => "form-control", "value" => $fichaPersonale['ciudade_id']]);
                 echo $this->Form->control('comuna_id', ["id" => "comuna_id", "name" => "comuna_id", "class" => "form-control", "value" => $fichaPersonale['comuna_id']]);
                 echo $this->Form->control('Dirección',["id" => "direccion", "name" => "direccion", "class" => "form-control", "value" => $fichaPersonale['direccion']]);
-                echo $this->Form->control('Extensión' , ["id" => "telefono", "name" => "telefono", "class" => "form-control phone", "value" => $fichaPersonale['telefono']]);
+                echo $this->Form->control('Extensión (*)' , ["id" => "telefono", "name" => "telefono","required" => true ,"class" => "form-control phone", "value" => $fichaPersonale['telefono']]);
                 echo $this->Form->control('celular', ["id" => "celular", "name" => "celular", "class" => "form-control phone", "value" => $fichaPersonale['celular']]);
 
                 echo(" <u> <br><br><strong>Contacto emergencia : </u> </strong><br><br> ");

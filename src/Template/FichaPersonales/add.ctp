@@ -7,15 +7,17 @@
 
 <div class="fichaPersonales form large-9 medium-8 columns content">
     <?= $this->Form->create($fichaPersonale) ?>
+    
     <input type="hidden" name="active" id="active" value="1"> 
     <input type="hidden" id="area_hidden" name="area_hidden" value="0" ?>
     <!--<input type="hidden" name="sub_sistema_id_hd" id="sub_sistema_id_hd" value=""> -->
-    <fieldset>
-        <legend><?= __('Agregar Ficha Personales') ?></legend>
 
+    <fieldset>
+        <legend><?= __('Agregar Ficha Personal') ?></legend>
+        <div class="alert alert-success" role="alert">Los campos marcados con <b>(*)</b> son obligatorios.</div>
          <div class="form-group">
             <div class="input select required">
-                <label for="user_asignado_id">Asignar Usuario</label>
+                <label for="user_asignado_id">Asignar Usuario (*)</label>
                  <select class="form-control" required="required" id="user_id" name="user_id">
                 <option value=""></option>
                 <?php
@@ -35,17 +37,20 @@
              ?>
             <div class="form-group">
               <?php
-            echo $this->Form->control('Empresa_id', ['options' => $empresas, 'empty' => true, "class" => 'form-control', 'required' => true , 'id' => 'empresa_id', 'name' => 'empresa_id']);
+            echo $this->Form->control('Empresa (*)', ['options' => $empresas, 'empty' => true, "class" => 'form-control', 'required' => true , 'id' => 'empresa_id', 'name' => 'empresa_id']);
             ?>
                 
                 </select>
             </div>
         </div>
         <div class="form-group">
-                <?php
-                  //  echo $this->Form->control('Área', [ 'empty' => true, 'id' => 'area_id', 'name' => 'area_id', 'required' => true ,'required' => true,"class" => 'form-control']);
-                echo $this->Form->control('Área', [ 'id' => 'area_id', 'options' => $areas ,'name' => 'area_id', 'empty' => true, "class" => 'form-control']);
-                ?>
+                
+                <label for="area_id" class="control-label col-md-4">Contacto cobranza(*)</label>                
+                            <select class="form-control" id="area_id" name="area_id" required="required">
+                            <option value=""></option>                                
+                            </select>
+                </div>
+                
         </div>
         <!--<div class="form-group">
                 <?php
@@ -54,12 +59,12 @@
         </div>-->
         <div class="form-group">
                 <?php
-                    echo $this->Form->control('Cargo_id', [ 'empty' => true, 'id' => 'cargo_id', 'required' => true,'name' => 'cargo_id','options' => $cargos ,"class" => 'form-control']);
+                    echo $this->Form->control('Cargo (*)', [ 'empty' => true, 'id' => 'cargo_id', 'required' => true,'name' => 'cargo_id','options' => $cargos ,"class" => 'form-control']);
                 ?>
         </div>
 
         <?php
-            echo $this->Form->control('tipo_movimiento_id', ['options' => $tipoMovimientos, 'empty' => true,'required' => true , "class" => 'form-control']);
+            echo $this->Form->control('tipo_movimiento_id (*)', ['options' => $tipoMovimientos, 'empty' => true,'required' => true , "class" => 'form-control']);
 
             //areas se llena segun el sistema elegido
             
@@ -72,11 +77,11 @@
             ?>
            
         <?php
-            echo $this->Form->control('nombre', [ "class" => 'form-control', 'disabled' => true, 'id' => 'nombre', 'name' => 'nombre', 'required' => true]);
-            echo $this->Form->control('apellido paterno', [ "class" => 'form-control', 'disabled' => true, 'id' => 'apellido1', 'name' => 'apellido1','required' => true]);
+            echo $this->Form->control('nombre (*)', [ "class" => 'form-control', 'disabled' => true, 'id' => 'nombre', 'name' => 'nombre', 'required' => true]);
+            echo $this->Form->control('apellido paterno (*)', [ "class" => 'form-control', 'disabled' => true, 'id' => 'apellido1', 'name' => 'apellido1','required' => true]);
             echo $this->Form->control('apellido materno', [ "class" => 'form-control', 'disabled' => true, 'id' => 'apellido2', 'name' => 'apellido2'/*, 'required' => true*/]); 
             echo $this->Form->control('email', [ "class" => 'form-control', 'disabled' => true]);
-            echo $this->Form->control('rut (*)', ["class" => 'form-control', 'id' => 'rut', 'name' => 'rut']);
+            echo $this->Form->control('rut (*)', ["class" => 'form-control rut'  ,"required" => true ,'id' => 'rut', 'name' => 'rut']);
 
             
             //echo $this->Form->control('fecha_nacimiento', ['empty' => true, "class" => 'form-control']);   
@@ -95,7 +100,7 @@
             echo $this->Form->control('ciudades', [ "class" => 'form-control','id' => 'ciudades', 'name' => 'ciudades']);
             echo $this->Form->control('comuna', [ 'empty' => true, "class" => 'form-control']);
             echo $this->Form->control('dirección', [ "class" => 'form-control']);
-            echo $this->Form->control('Extensión', [ "class" => 'form-control phone','id' => 'telefono','required' => true , 'name' => 'telefono']);
+            echo $this->Form->control('Extensión (*)', [ "class" => 'form-control phone','id' => 'telefono','required' => true , 'name' => 'telefono']);
             echo $this->Form->control('celular', [ "class" => 'form-control phone']);
             
 

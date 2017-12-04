@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Rol') ?></th>
-            <td><?= h($user->role) ?></td>
+            <td><?= h($user->role['name']) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('ID') ?></th>

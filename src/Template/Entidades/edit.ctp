@@ -28,6 +28,32 @@
         ?>
         </div>
     </fieldset>
+    <div class="table-responsive">
+         <h4><?= __('Permisos') ?></h4>
+                <table class="table table-striped data-table">
+                <thead>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Telefono</th>
+                    
+                    
+                </thead>
+                <tbody>
+
+                    <?php foreach ($contactos as $row):?>                            
+
+                        <tr>
+                            <td><?php echo $row->contacto['id']  ?> </td>
+                            <td><?php echo $row->contacto['name']  ?> </td>
+                            <td><?php echo $row->contacto['email']  ?> </td>
+                            <td><?php echo $row->contacto['telefono']  ?> </td>                                                     
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+
+                </table>
+    </div>
     <div class="row">
         <div class="col-md-6">
             <a class="btn btn-danger" href="<?php echo APP_URI; ?>entidades/index/">Cancelar</a>

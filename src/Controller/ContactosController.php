@@ -27,6 +27,27 @@ class ContactosController extends AppController
         $this->set('_serialize', ['contactos']);
     }
 
+    public function view($id = null , $idcalendario = null)
+    {
+        
+
+        //rescato cotizacion activa
+        if(isset($id) && is_numeric($id))
+        {
+            $contacto = $this->Contactos->get($id);
+        }
+
+        if(isset($idcalendario) && is_numeric($idcalendario))
+        {
+            $contacto = $this->Contactos->get($id);
+            $this->set(compact('idcalendario'));
+        }
+        
+        $this->set('contacto', $contacto);
+
+        $this->set('_serialize', ['contacto']);
+    }
+
     /**
      * View method
      *
@@ -70,6 +91,7 @@ class ContactosController extends AppController
         $html = false;
         
         $contacto = $this->Contactos->newEntity();
+        
         if ($this->request->is('post')) {
             $contacto = $this->Contactos->patchEntity($contacto, $this->request->getData());
             if ($this->Contactos->save($contacto)) {
@@ -80,9 +102,9 @@ class ContactosController extends AppController
                  if ($x) {
                   debug($contacto);
                   debug($x);
-                  return false;
-                 }                
-                 die;*/
+                  return false; */
+                                 
+                 
                 $debug = 'No se puede agregar el contacto, favor vuelva a intentar!';
                 $this->Flash->error(__( $debug));
             }
@@ -262,8 +284,28 @@ class ContactosController extends AppController
     public function activarContacto()
     {
         $rs_contacto = $this->Contactos->find('all')->contain(['Entidades'])->where(['Contactos.active <>' => '1'])->toArray();
+        $this->loadModel('RolesPermisos');
+
+        $rol = $this->_getRol();
+        $permisos = array(75, 98, 78, 123);
+        $permiso = $this->RolesPermisos->find('all')->where(['RolesPermisos.role_id' => $rol , 'RolesPermisos.permiso_id IN' => $permisos])->toArray();
+        if(isset($permiso) && count($permiso) > 0)
+        {
+            foreach ($permiso as $row ) {
+                $comprueba = $row['permiso_id'];
+                if(in_array($comprueba, $permisos))
+                {
+                    $permisos2[] = $comprueba;
+                }                
+            }
+            //var_dump($permiso); die;        
+        }else
+        {
+            $permisos2[] = 0;
+        }
 
         $this->set('contactos', $rs_contacto);
+        $this->set('permisos2', $permisos2);
 
     }
 

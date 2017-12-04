@@ -4,7 +4,6 @@
   */
 ?>
 <?= $this->Html->script('tickets') ?>
-<script type="text/javascript" src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
   <script type="text/javascript">
   tinymce.init({
     selector: '#descripcion',
@@ -98,7 +97,7 @@
         <div class="form-group">
         <?php
             echo $this->Form->input('adjunto',array( 'type' => 'file'));
-            echo $this->Form->control('comentarios', ["class" => 'form-control', 'required' => true]);
+            echo $this->Form->control('comentarios', ["class" => 'form-control', 'required' => true, 'name' => 'comentarios', 'id' => 'comentarios']);
         ?>
 
         </div>

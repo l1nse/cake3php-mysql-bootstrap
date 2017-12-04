@@ -11,13 +11,19 @@ use Cake\ORM\Entity;
  * @property string $apellido1
  * @property string $password
  * @property string $name
- * @property string $role
+ * @property string $roleees
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  * @property int $active
+ * @property int $estado
  * @property string $apellido2
+ * @property int $role_id
  *
+ * @property \App\Model\Entity\Role $role
  * @property \App\Model\Entity\Asignacione[] $asignaciones
+ * @property \App\Model\Entity\Bsp[] $bsps
+ * @property \App\Model\Entity\CalendariosAsistente[] $calendarios_asistentes
+ * @property \App\Model\Entity\Cotizacione[] $cotizaciones
  * @property \App\Model\Entity\FichaPersonale[] $ficha_personales
  * @property \App\Model\Entity\Ticket[] $tickets
  */

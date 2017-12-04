@@ -28,7 +28,7 @@ class UsersController extends AppController
     public function index()
     {
         //$users = $this->paginate($this->Users);
-        $users = $this->Users->find('all');
+        $users = $this->Users->find('all')->contain(['Roles']);
 
         $this->set(compact('users'));
         $this->set('_serialize', ['users']);
@@ -44,7 +44,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['Asignaciones', 'FichaPersonales', 'Tickets']
+            'contain' => ['Asignaciones','Roles' ,'FichaPersonales', 'Tickets']
         ]);
 
         $user['created'] = isset($user['created']) && $user['created']!='' ?  $this->formatDateViewC($user['created']) : '';
@@ -74,7 +74,10 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $this->set(compact('user'));
+            $this->loadModel('Roles');
+            $roles = $this->Roles->find('all')->where(['Roles.active' => 1])->toArray();
+
+        $this->set(compact('user','roles'));
         $this->set('_serialize', ['user']);
     }
 
@@ -104,7 +107,10 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $this->set(compact('user'));
+            $this->loadModel('Roles');
+            $roles = $this->Roles->find('all')->where(['Roles.active' => 1])->toArray();
+
+        $this->set(compact('user' ,'roles'));
         $this->set('_serialize', ['user']);
     }
 
@@ -209,6 +215,7 @@ class UsersController extends AppController
     public function home(){
         $rs_user = $this->request->session()->read('Auth.User');
 
+      
         $rs = $this->Users->find('all')->where(['username' => $rs_user[0]['username']])->toArray();
 
         $this->set('users', $rs[0]);
@@ -238,4 +245,89 @@ class UsersController extends AppController
         $this->set(compact('user'));
         $this->set('_serialize', ['user']);
     }
+
+    public function cambiarEstado()
+    {
+        $this->autoRender = false;
+
+        $result = false;
+        $debug  = false;
+        $html = false;
+
+        $user = $this->_getUser();
+        $user = $this->_getUserFull($user);
+        
+
+        if($this->request->is('post')){
+            
+            $dondeestoy = $this->request->getData('dondeestoy');
+            if(is_numeric($dondeestoy))
+            {
+                $rs_estoy['estado'] = $dondeestoy;
+                $user = $this->Users->patchEntity($user, $rs_estoy);
+                //var_dump("ex"); die;
+                if($this->Users->save($user))
+                {
+
+                    $this->Flash->success(__('Estado cambiado.'));
+                    $result = true;
+
+                }else
+                {
+                    $debug = 'Error al cambiar el estado, intente nuevamente mas tarde';
+                    $this->Flash->error(__( $debug));
+                }
+            }
+            
+            $this->loadModel('Digis');
+            $digi = $this->Digis->newEntity();
+            $digi['user_id'] = $user['id'];
+            $digi['active'] = $dondeestoy;
+
+
+            $observacion = $this->request->getData('observacion');
+            
+            if(isset($observacion) && $observacion != '')
+            {
+                $digi['observacion'] = $observacion;    
+            }
+
+            $date_salida = $this->request->getData('date_salida');
+
+            if(isset($date_salida) && $date_salida != '')
+            {
+                $date_salida = $this->formatDateTimeCalendar($date_salida);
+                $digi['fecha_desde'] = $date_salida;    
+            }
+
+            $date_vuelta = $this->request->getData('date_vuelta');
+
+            if(isset($date_vuelta) && $date_vuelta != '')
+            {
+                $date_vuelta = $this->formatDateTimeCalendar($date_vuelta);
+                $digi['fecha_hasta'] = $date_vuelta;    
+            }
+
+
+            if ($this->Digis->save($digi)) {               
+                //$this->Flash->success(__('Estado cambiado.'));
+                
+            }else
+            {
+                $debug = 'Error al cambiar el estado, intente nuevamente mas tarde';
+                //$this->Flash->error(__( $debug));
+            }
+            
+
+
+        }
+        $content = json_encode(array('result' => $result, 'debug' => $debug, 'html' => $html));
+
+        $this->response->getBody()->write($content);
+        $this->response = $this->response->withType('json');
+        
+
+        return $this->response;
+    }
+
 }

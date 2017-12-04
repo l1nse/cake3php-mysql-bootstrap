@@ -8,15 +8,16 @@
     <?= $this->Form->create($sistema) ?>
     <input type="hidden" name="active" id="active" value="1"> 
     <fieldset>
-        <legend><?= __('Add Sistema') ?></legend>
+        <legend><?= __('Agregar Sistema') ?></legend>
+        <div class="alert alert-success" role="alert">Los campos marcados con <b>(*)</b> son obligatorios.</div>
         <div class="form-group">
             <?php
-                echo $this->Form->control('Nombre' , ["id" => "name", "name" => "name", "class" => "form-control", "value" => $sistema['name'], "required" => true]);
-                echo $this->Form->control('Nombre_contacto' , ["id" => "name_contacto", "name" => "name_contacto", "class" => "form-control", "value" => $sistema['name'], "required" => true]);
-                echo $this->Form->control('Email' , ["id" => "email_contacto", "name" => "email_contacto", "class" => "form-control correo", "value" => $sistema['name'], "required" => true]);
-                echo $this->Form->control('Rut_empresa' , ["id" => "rut_empresa", "name" => "rut_empresa", "class" => "form-control", "value" => $sistema['name'], "required" => true]);
-                echo $this->Form->control('Nombre_empresa',  ["id" => "name_empresa", "name" => "name_empresa", "class" => "form-control", "value" => $sistema['name'], "required" => true]);
-                echo $this->Form->control('direccion_empresa' ,   ["id" => "direccion_empresa", "name" => "direccion_empresa", "class" => "form-control", "value" => $sistema['name'], "required" => true]);
+                echo $this->Form->control('Nombre (*)' , ["id" => "name", "name" => "name", "class" => "form-control", "value" => $sistema['name'], "required" => true]);
+                echo $this->Form->control('Nombre_contacto (*)' , ["id" => "name_contacto", "name" => "name_contacto", "class" => "form-control", "value" => $sistema['name'], "required" => true]);
+                echo $this->Form->control('Email (*)' , ["id" => "email_contacto", "name" => "email_contacto", "class" => "form-control correo", "value" => $sistema['name'], "required" => true]);
+                echo $this->Form->control('Rut_empresa (*)' , ["id" => "rut_empresa", "name" => "rut_empresa", "class" => "form-control", "value" => $sistema['name'], "required" => true]);
+                echo $this->Form->control('Nombre_empresa (*)',  ["id" => "name_empresa", "name" => "name_empresa", "class" => "form-control", "value" => $sistema['name'], "required" => true]);
+                echo $this->Form->control('direccion_empresa (*)' ,   ["id" => "direccion_empresa", "name" => "direccion_empresa", "class" => "form-control", "value" => $sistema['name'], "required" => true]);
                 
             ?>
         </div>

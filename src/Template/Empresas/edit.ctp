@@ -8,13 +8,15 @@
     <?= $this->Form->create($empresa) ?>
     <input type="hidden" name="active" id="active" value="1"> 
     <fieldset>
-        <legend><?= __('Edit Empresa') ?></legend>
+        <legend><?= __('Agregar Empresa') ?></legend>
+        <div class="alert alert-success" role="alert">Los campos marcados con <b>(*)</b> son obligatorios.</div>
         <?php
-            echo $this->Form->control('Nombre',["id" => "name", "name" => "name", "class" => "form-control", "value" => $empresa['name'], "required" => true]);
-            echo $this->Form->control('Rut',["id" => "rut", "name" => "rut", "class" => "form-control", "value" => $empresa['rut'], "required" => true]);
-            echo $this->Form->control('Nombre_Softland',["id" => "name_softland", "name_softland" => "rut", "class" => "form-control", "value" => $empresa['name_softland'], "required" => true]);
+            echo $this->Form->control('Nombre (*)',["id" => "name", "name" => "name", "class" => "form-control", "value" => $empresa['name'], "required" => true]);
+            echo $this->Form->control('Rut (*)',["id" => "rut", "name" => "rut", "class" => "form-control", "value" => $empresa['rut'], "required" => true]);
+            echo $this->Form->control('Nombre_Softland (*)',["id" => "name_softland", "name_softland" => "rut", "class" => "form-control", "value" => $empresa['name_softland'], "required" => true]);
         ?>
     </fieldset>
+    <br>
     <div class="row">
         <div class="col-md-6">
             <a class="btn btn-danger" href="<?php echo APP_URI; ?>empresas/index/">Cancelar</a>

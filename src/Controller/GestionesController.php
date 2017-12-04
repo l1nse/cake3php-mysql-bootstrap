@@ -51,14 +51,18 @@ class GestionesController extends AppController
      */
     public function add()
     {
+        var_dump("estoy en el add"); die;
         $gestione = $this->Gestiones->newEntity();
         if ($this->request->is('post')) {
+
             $gestione = $this->Gestiones->patchEntity($gestione, $this->request->getData());
+
             if ($this->Gestiones->save($gestione)) {
                 $this->Flash->success(__('The gestione has been saved.'));
-
+                
                 return $this->redirect(['action' => 'index']);
             }
+
             $this->Flash->error(__('The gestione could not be saved. Please, try again.'));
         }
         $tickets = $this->Gestiones->Tickets->find('list', ['limit' => 200]);
@@ -79,6 +83,7 @@ class GestionesController extends AppController
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            
             $gestione = $this->Gestiones->patchEntity($gestione, $this->request->getData());
             if ($this->Gestiones->save($gestione)) {
                 $this->Flash->success(__('The gestione has been saved.'));

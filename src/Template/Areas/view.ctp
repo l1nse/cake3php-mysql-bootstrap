@@ -48,10 +48,10 @@
         </tr> -->
     </table>
     <div class="row">
-    <div class="col-md-12">
-        <a class="btn btn-primary" href="<?php echo APP_URI; ?>areas/index/"><i class="glyphicon glyphicon-circle-arrow-left"></i> Volver</a>
-        
-    </div>
+        <div class="col-md-12">
+            <a class="btn btn-primary" href="<?php echo APP_URI; ?>areas/index/"><i class="glyphicon glyphicon-circle-arrow-left"></i> Volver</a>
+            
+        </div>
 </div>
     
 </div>

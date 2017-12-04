@@ -4,7 +4,7 @@
   */
 ?>
 <?= $this->Html->script('tickets') ?>
-<script type="text/javascript" src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+
   <script type="text/javascript">
   tinymce.init({
     selector: '#descripcion',

@@ -14,7 +14,7 @@ use Cake\ORM\TableRegistry;
 class CorreosTable extends Table
 {
 
-    public function enviarcorreo($tipo, $id, $nombre_persona,$email_user, $descripcion){
+    public function enviarcorreo($tipo, $id, $nombre_persona,$email_user, $descripcion ,$observacion = null){
         //$this->loadModel('Log');
         $this->Log = TableRegistry::get('Log');
         if($email_user!=''){
@@ -75,6 +75,46 @@ class CorreosTable extends Table
                         $Email->to($email_user);
                         //$Email->addTo('');
                     break;
+                    case '8': 
+
+                        $Email->subject('[MITANI HOLDING] Nueva reunión agendada N° '.$id);
+                        $Email->template('nuevaReunion', 'default');
+                        $Email->viewVars(array('id' => $id, 'email_user' =>$email_user ,'nombre_persona' => $nombre_persona, 'descripcion' => $descripcion));
+                        //var_dump($id); die;
+                        $Email->to($email_user);
+                        //$Email->addTo('');
+                    break;
+
+                    case '9': 
+
+                        $Email->subject('[MITANI HOLDING] Reunión editada N° '.$id);
+                        $Email->template('editReunion', 'default');
+                        $Email->viewVars(array('id' => $id, 'email_user' =>$email_user ,'nombre_persona' => $nombre_persona, 'descripcion' => $descripcion, 'observacion'=>$observacion ));
+                        //var_dump($id); die;
+                        $Email->to($email_user);
+                        //$Email->addTo('');
+                    break;
+
+                    case '10': 
+
+                        $Email->subject('[MITANI HOLDING] Reunión cancelada N° '.$id);
+                        $Email->template('nuevaReunion', 'default');
+                        $Email->viewVars(array('id' => $id, 'email_user' =>$email_user ,'nombre_persona' => $nombre_persona, 'descripcion' => $descripcion));
+                        //var_dump($id); die;
+                        $Email->to($email_user);
+                        //$Email->addTo('');
+                    break;
+
+                    case '11': 
+
+                        $Email->subject('[MITANI HOLDING] Reunión concretada N° '.$id);
+                        $Email->template('nuevaReunion', 'default');
+                        $Email->viewVars(array('id' => $id, 'email_user' =>$email_user ,'nombre_persona' => $nombre_persona, 'descripcion' => $descripcion));
+                        //var_dump($id); die;
+                        $Email->to($email_user);
+                        //$Email->addTo('');
+                    break;
+                    
                 }
             }
             //var_dump($Email); break;
@@ -85,5 +125,6 @@ class CorreosTable extends Table
         }
        }
     }
+
 }
 

@@ -65,7 +65,7 @@ class AreasController extends AppController
             }
             $this->Flash->error(__('The area could not be saved. Please, try again.'));
         }
-        $empresas = $this->Areas->Empresas->find('list', ['limit' => 200]);
+        $empresas = $this->Areas->Empresas->find('all')->where(['Empresas.active' => 1] )->toArray();
         $this->set(compact('area', 'empresas'));
         $this->set('_serialize', ['area']);
     }
@@ -196,7 +196,7 @@ class AreasController extends AppController
             }
             $this->Flash->error(__('The area could not be saved. Please, try again.'));
         }
-        $empresas = $this->Areas->Empresas->find('list', ['limit' => 200]);
+        $empresas = $this->Areas->Empresas->find('all')->where(['Empresas.active' => 1] )->toArray();
         $this->set(compact('area', 'empresas'));
         $this->set('_serialize', ['area']);
     }

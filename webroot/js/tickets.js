@@ -22,14 +22,14 @@ $(document).ready(function() {
     event.preventDefault();
     tinyMCE.triggerSave();
     
-    var validator = $( "#frm_add" ).validate();
+    var validator = $( "#frm_gestion" ).validate();
     validator.form();
     console.log("vamos a validar");
 
     //valido si el formulario esta ok
     if(validator.valid()){
       console.log("es valido");
-      $( "#frm_add" ).submit(); 
+      $( "#frm_gestion" ).submit(); 
       
     }else
     {
@@ -124,7 +124,7 @@ $(document).ready(function() {
   $("#sub-sistema-id").change(function(event) {
     var sub_sistema_id = $(this).val();
     if(sub_sistema_id=='18'){
-      $("#user_asignado_id").select2().val(30).trigger('change');
+      $("#user_asignado_id").select2().val(31).trigger('change');
     }else{
       $("#user_asignado_id").select2().val('').trigger('change');
     }

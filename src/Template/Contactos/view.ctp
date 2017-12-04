@@ -3,20 +3,10 @@
   * @var \App\View\AppView $this
   */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Contacto'), ['action' => 'edit', $contacto->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Contacto'), ['action' => 'delete', $contacto->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contacto->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Contactos'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Contacto'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Entidades'), ['controller' => 'Entidades', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Entidade'), ['controller' => 'Entidades', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
+
 <div class="contactos view large-9 medium-8 columns content">
     <h3><?= h($contacto->name) ?></h3>
-    <table class="vertical-table">
+    <table class="table table-striped table-bordered">
         <tr>
             <th scope="row"><?= __('Entidade') ?></th>
             <td><?= $contacto->has('entidade') ? $this->Html->link($contacto->entidade->name, ['controller' => 'Entidades', 'action' => 'view', $contacto->entidade->id]) : '' ?></td>
@@ -58,4 +48,14 @@
             <td><?= h($contacto->modified) ?></td>
         </tr>
     </table>
+</div>
+
+<div class="col-md-8">
+    <?php if(isset($idcalendario) && is_numeric($idcalendario))
+    { ?>
+        <a class="btn btn-primary" href="<?php echo APP_URI; ?>calendarios/view/<?php echo $idcalendario ?>"><i class="glyphicon glyphicon-circle-arrow-left"></i> Volver</a>
+    <?php
+    } ?>
+        
+        
 </div>

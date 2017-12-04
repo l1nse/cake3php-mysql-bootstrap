@@ -3,29 +3,26 @@
   * @var \App\View\AppView $this
   */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $tipoCambio->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $tipoCambio->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Tipo Cambios'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Item Cotizaciones'), ['controller' => 'ItemCotizaciones', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Item Cotizacione'), ['controller' => 'ItemCotizaciones', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
+
 <div class="tipoCambios form large-9 medium-8 columns content">
     <?= $this->Form->create($tipoCambio) ?>
+    <input type="hidden" id="active" name="active" value="1" ?>
     <fieldset>
-        <legend><?= __('Edit Tipo Cambio') ?></legend>
+        <legend><?= __('Editar Tipo Cambio') ?></legend>
+        <div class="alert alert-success" role="alert">Los campos marcados con <b>(*)</b> son obligatorios.</div>
         <?php
-            echo $this->Form->control('name');
-            echo $this->Form->control('active');
+            echo $this->Form->control('Nombre (*)' , [ "class" => 'form-control' , 'id' => 'name', 'name' => 'name', 'required' => true, "value" => $tipoCambio['name'] ]);
+            
         ?>
     </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+    <hr>
+    <div class="row">
+        <div class="col-md-6">
+            <a class="btn btn-danger" href="<?php echo APP_URI; ?>tipo-cambios/index/">Cancelar</a>
+            <!--<a class="btn btn-info" href="<?php echo APP_URI; ?>tickets/delete/<?php echo $ticket->id; ?>/3" >Cerrar</a>-->
+        </div>
+        <div class="col-md-1 col-md-offset-5">
+            <?= $this->Form->button('Guardar',  array("class" => 'btn btn-success')) ?>
+        </div>
+    </div>
 </div>

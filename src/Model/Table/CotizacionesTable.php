@@ -9,11 +9,9 @@ use Cake\Validation\Validator;
 /**
  * Cotizaciones Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Cotizaciones
  * @property \Cake\ORM\Association\BelongsTo $Entidades
  * @property \Cake\ORM\Association\BelongsTo $CanalVentas
  * @property \Cake\ORM\Association\BelongsTo $Users
- * @property \Cake\ORM\Association\HasMany $Cotizaciones
  * @property \Cake\ORM\Association\HasMany $ItemCotizaciones
  * @property \Cake\ORM\Association\HasMany $Pasajero
  *
@@ -41,14 +39,11 @@ class CotizacionesTable extends Table
         parent::initialize($config);
 
         $this->setTable('cotizaciones');
-        $this->setDisplayField('cotizacione_id');
-        $this->setPrimaryKey('cotizacione_id');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Cotizaciones', [
-            'foreignKey' => 'cotizacione_id'
-        ]);
         $this->belongsTo('Entidades', [
             'foreignKey' => 'entidade_id'
         ]);
@@ -58,13 +53,10 @@ class CotizacionesTable extends Table
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id'
         ]);
-        $this->hasMany('Cotizaciones', [
-            'foreignKey' => 'cotizacione_id'
-        ]);
         $this->hasMany('ItemCotizaciones', [
             'foreignKey' => 'cotizacione_id'
         ]);
-        $this->hasMany('Pasajero', [
+        $this->hasMany('Pasajeros', [
             'foreignKey' => 'cotizacione_id'
         ]);
     }
@@ -80,6 +72,10 @@ class CotizacionesTable extends Table
         $validator
             ->integer('id')
             ->allowEmpty('id', 'create');
+
+        $validator
+            ->integer('folio')
+            ->allowEmpty('folio');
 
         $validator
             ->integer('version')
@@ -105,7 +101,6 @@ class CotizacionesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['cotizacione_id'], 'Cotizaciones'));
         $rules->add($rules->existsIn(['entidade_id'], 'Entidades'));
         $rules->add($rules->existsIn(['canal_venta_id'], 'CanalVentas'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));

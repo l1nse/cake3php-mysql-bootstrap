@@ -9,23 +9,23 @@
     <table class="table table-striped table-bordered">
         <tr>
             <th scope="row"><?= __('ID') ?></th>
-            <td><?= $fichaPersonale->has('user') ? $this->Html->link($fichaPersonale->user->id, ['controller' => 'Users', 'action' => 'view', $fichaPersonale->user->id]) : '' ?></td>
+            <td><?= h($fichaPersonale->user->id )  ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Empresa') ?></th>
-            <td><?= $fichaPersonale->has('empresa') ? $this->Html->link($fichaPersonale->empresa->name, ['controller' => 'Empresas', 'action' => 'view', $fichaPersonale->empresa->id]) : '' ?></td>
+            <td><?=  h($fichaPersonale->empresa->name) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Tipo Movimiento') ?></th>
-            <td><?= $fichaPersonale->has('tipo_movimiento') ? $this->Html->link($fichaPersonale->tipo_movimiento->name, ['controller' => 'TipoMovimientos', 'action' => 'view', $fichaPersonale->tipo_movimiento->id]) : '' ?></td>
+            <td><?= h($fichaPersonale->tipo_movimiento->name) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Área') ?></th>
-            <td><?= $fichaPersonale->has('area') ? $this->Html->link($fichaPersonale->area->name, ['controller' => 'Areas', 'action' => 'view', $fichaPersonale->area->id]) : '' ?></td>
+            <td><?= h($fichaPersonale->area->name) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Cargo') ?></th>
-            <td><?= $fichaPersonale->has('cargo') ? $this->Html->link($fichaPersonale->cargo->name, ['controller' => 'Cargos', 'action' => 'view', $fichaPersonale->cargo->id]) : '' ?></td>
+            <td><?= h($fichaPersonale->cargo->name)  ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Nombre') ?></th>
@@ -46,15 +46,15 @@
         
         <tr>
             <th scope="row"><?= __('Paise') ?></th>
-            <td><?= $fichaPersonale->has('paise') ? $this->Html->link($fichaPersonale->paise->name, ['controller' => 'Paises', 'action' => 'view', $fichaPersonale->paise->id]) : '' ?></td>
+            <td><?= h($fichaPersonale->paise->name) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Ciudade') ?></th>
-            <td><?= $fichaPersonale->has('ciudade') ? $this->Html->link($fichaPersonale->ciudade->name, ['controller' => 'Ciudades', 'action' => 'view', $fichaPersonale->ciudade->id]) : '' ?></td>
+            <td><?= h($fichaPersonale->ciudade->name)?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Comuna') ?></th>
-            <td><?= $fichaPersonale->has('comuna') ? $this->Html->link($fichaPersonale->comuna->name, ['controller' => 'Comunas', 'action' => 'view', $fichaPersonale->comuna->id]) : '' ?></td>
+            <td><?= h($fichaPersonale->comuna->name) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Dirección') ?></th>
@@ -86,15 +86,15 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Banco') ?></th>
-            <td><?= $fichaPersonale->has('banco') ? $this->Html->link($fichaPersonale->banco->name, ['controller' => 'Bancos', 'action' => 'view', $fichaPersonale->banco->id]) : '' ?></td>
+            <td><?= h($fichaPersonale->banco->name)  ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Afp') ?></th>
-            <td><?= $fichaPersonale->has('afp') ? $this->Html->link($fichaPersonale->afp->name, ['controller' => 'Afps', 'action' => 'view', $fichaPersonale->afp->id]) : '' ?></td>
+            <td><?= h($fichaPersonale->afp->name) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Isapre') ?></th>
-            <td><?= $fichaPersonale->has('isapre') ? $this->Html->link($fichaPersonale->isapre->name, ['controller' => 'Isapres', 'action' => 'view', $fichaPersonale->isapre->id]) : '' ?></td>
+            <td><?= h($fichaPersonale->isapre->name) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
@@ -151,11 +151,27 @@
     </table>  
     <hr>
 </div>
+<?php if(isset($idcalendario) && is_numeric($idcalendario))
+    { 
+?>
+    <div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary" href="<?php echo APP_URI; ?>calendarios/view/<?php echo $idcalendario ?>"><i class="glyphicon glyphicon-circle-arrow-left"></i> Volver</a>
+        
+    </div>
 
-<div class="row">
+<?php  
+    }else{ ?>
+    <div class="row">
     <div class="col-md-12">
         <a class="btn btn-primary" href="<?php echo APP_URI; ?>fichaPersonales/index/"><i class="glyphicon glyphicon-circle-arrow-left"></i> Volver</a>
         
     </div>
+
+
+<?php   
+    }
+ ?>
+    
 </div>
 

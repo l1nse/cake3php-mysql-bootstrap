@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-12">
         <?php
-            if($rs_user[0]['role']=='admin' || $rs_user[0]['role']=='gerente'){
+            if(in_array(71, $permisos2)){
         ?>
             <a class="btn btn-primary btn-xs" href="<?php echo APP_URI; ?>entidades/add/"><i class="glyphicon glyphicon-plus-sign"></i> Crear Empresas</a>
            
@@ -63,8 +63,8 @@
                 ?>
                 <?php
                 if(isset($entidade->active)){
-                                if($entidade->active=='1' )
-                                    {
+                    if($entidade->active=='1' )
+                    {
                      ?>
                 <tr>
                     <td class="details-control" id="<?php echo $entidade->id; ?>"><a class="btn btn-xs btn-default"><i class="glyphicon glyphicon-menu-down"></i></a></td>
@@ -72,25 +72,41 @@
                     <td><?= h($entidade->name) ?></td>
                     <td><?= h($entidade->rut) ?></td>
                     <td><?= h($entidade->direccion) ?></td>
-                    <td><a href="tel:<?= h($entidade->telefono) ?>"><?= h($entidade->telefono) ?></a></td>
+                    <td><?= h($entidade->telefono) ?></td>
                     <td><?= h($entidade->acuerdo) ?></td>
                     <!--<td><?= h($entidade->name_representante) ?></td>
                     <td><?= h($entidade->correo_representante) ?></td>-->
                     <td style="text-align: center;"><?= $estado;  ?></td>
                     <td style="text-align: center;">
-                    
+
+                    <?php  if(in_array(77, $permisos2)){ ?>
                         <a class="btn btn-primary btn-xs" href="javascript:modalContacto(<?php echo $entidade->id; ?>, '<?php echo $entidade->name; ?>')" data-toggle="tooltip" data-placement="left" title="Agregar Contacto"><i class="glyphicon glyphicon-plus-sign"></i></a>
-                    
+                    <?php }else {?>
+                        <a class="btn btn-primary btn-xs" disabled href="#" data-toggle="tooltip" data-placement="left" title="Agregar Contacto"><i class="glyphicon glyphicon-plus-sign"></i></a>
+
+                    <?php }?>
+
+                    <?php  if(in_array(94, $permisos2)){?>
+
+                        <a class="btn btn-info btn-xs" href="<?php echo APP_URI; ?>calendarios/add/<?php echo $entidade->id; ?>"" data-toggle="tooltip" data-placement="left" title="Agregar Reunion"><i class="glyphicon glyphicon-dashboard"></i></a>
+                    <?php }else { ?>
+                        <a class="btn btn-info btn-xs" disabled href="#" data-toggle="tooltip" data-placement="left" title="Agregar Reunion"><i class="glyphicon glyphicon-dashboard"></i></a>
+                    <?php  } ?>
+
+                    <?php  if(in_array(72, $permisos2)){?>
                         <a class="btn btn-warning btn-xs" href="<?php echo APP_URI; ?>entidades/edit/<?php echo $entidade->id; ?>/1" data-toggle="tooltip" data-placement="left" title="Editar"><i class="glyphicon glyphicon-edit"></i></a>
-                        <?php
-                        
-                            if($entidade->active=='1' && ($rs_user[0]['role']=='admin'||$rs_user[0]['role']=='gerente')){
-                            ?>
-                                <a class="btn btn-danger btn-xs" href="<?php echo APP_URI; ?>entidades/anular/<?php echo $entidade->id; ?>" data-toggle="tooltip" data-placement="left" title="Desactivar"><i class="glyphicon glyphicon-trash"></i></a>
-                            <?php
-                            }
-                
-                    }
+                    <?php }else{?>
+                        <a class="btn btn-warning btn-xs" disabled href="#" data-toggle="tooltip" data-placement="left" title="Editar"><i class="glyphicon glyphicon-edit"></i></a>
+                    <?php }?>
+
+                    <?php if(in_array(122, $permisos2)){ ?>
+                        <a class="btn btn-danger btn-xs" href="<?php echo APP_URI; ?>entidades/anular/<?php echo $entidade->id; ?>" data-toggle="tooltip" data-placement="left" title="Desactivar"><i class="glyphicon glyphicon-trash"></i></a>
+                    <?php }else{ ?>
+                        <a class="btn btn-danger btn-xs" disabled href="#" data-toggle="tooltip" data-placement="left" title="Desactivar"><i class="glyphicon glyphicon-trash"></i></a>
+
+                    <?php }                          
+                        }
+
                 }
                         ?>
                     </td>

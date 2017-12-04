@@ -324,11 +324,16 @@ class TicketsController extends AppController
                     return $this->redirect('/despachos/add/'.$ticket->id);
                 }else{
                     //correo envio
-                         echo '<script> alert("MANDO  EL CORREO") </script>';  
-                    $descripcion = "<b>Ticket N°: ".$ticket->id."</b><br><br><b>Asunto:</b> ".$this->request->data['asunto']."<br><br><b>Descripción</b>: ".$this->request->data['descripcion'];
+                         //echo '<script> alert("MANDO  EL CORREO") </script>';  
+                    $id_user = $this->_getUser();
+                    $rs_user = $this->_getUserFull($id_user);
+                    $user = $rs_user->name." ".$rs_user->apellido1." ".$rs_user->apellido2;
+                    
+                      
+                    $descripcion = "<b>Ticket N°: ".$ticket->id."</b><br><br><b>Creado por: </b>".$user."<br><br><b>Asunto:</b> ".$this->request->data['asunto']."<br><br><b>Descripción</b>: ".$this->request->data['descripcion'];
                     $this->correos->enviarcorreo(1, $ticket->id,$this->_getUserNameAsig($this->request->data['user_asignado_id']),$this->_getUserEmailAsig($this->request->data['user_asignado_id']), $descripcion);
 
-                    var_dump($this->_getUserEmailAsig($this->request->data['user_asignado_id'])); die;
+                    //var_dump($this->_getUserEmailAsig($this->request->data['user_asignado_id'])); die;
                      
                     $this->Flash->success(__('Su ticket fue creado correctamente!'));
                     return $this->redirect(['action' => 'index']);
@@ -528,8 +533,12 @@ class TicketsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             //agrego el comentario de gestiones
             $rs_datos = $this->request->data;
+            $id_user = $this->_getUser();
+            $rs_user = $this->_getUserFull($id_user);
+            $user = $rs_user->name;
+            
             $getGestiones['ticket_id'] = $id;
-            $getGestiones['comentarios'] = $rs_datos['comentarios'];
+            $getGestiones['comentarios'] = $user." : ".$rs_datos['comentarios'];
 
             $gestione = $this->Gestiones->patchEntity($gestione, $getGestiones);
             $this->Gestiones->save($gestione);
@@ -558,8 +567,8 @@ class TicketsController extends AppController
                     }
                 }
             }
-
-            $descripcion = "<b>Ticket N°: ".$id."</b><br><br><b>Comentarios: </b>: ".$this->request->data['comentarios'];
+            $user = $rs_user->name." ".$rs_user->apellido1." ".$rs_user->apellido2;
+            $descripcion = "<b>Ticket N°: ".$id."</b><br><br><b>Comentario agregado por: </b>".$user."<br><br><b>Comentarios: </b>: ".$this->request->data['comentarios'];
             $this->correos->enviarcorreo(7, $id,$this->_getUserNameAsig($ticket->user_id),$this->_getUserEmailAsig($ticket->user_id), $descripcion);
         }
         $sistemas = $this->Tickets->Sistemas->find('list', ['limit' => 200]);
@@ -617,6 +626,7 @@ class TicketsController extends AppController
         $this->loadModel('TicketArchives');
         $this->loadModel('Archives');
         $this->loadModel('Users');
+        $this->loadModel('correos');
 
         
 
@@ -627,13 +637,17 @@ class TicketsController extends AppController
         if(is_array($ticketArchive) && count($ticketArchive)>0){
             $rs_archive = $this->Archives->find('all')->where(['id' => $ticketArchive[0]->archive_id ])->toArray();
         }
+          $id_user = $this->_getUser();
+          $rs_user = $this->_getUserFull($id_user);
+          $user = $rs_user->name;
 
+                    
         if ($this->request->is(['patch', 'post', 'put'])) {
             //agrego el comentario de gestiones
             $rs_datos = $this->request->data;
             $getGestiones['ticket_id'] = $id;
-            $getGestiones['comentarios'] = $rs_datos['comentarios'];
-
+            $getGestiones['comentarios'] = $user." : ".$rs_datos['comentarios'];
+            //var_dump( $getGestiones['comentarios']); die;
             $gestione = $this->Gestiones->patchEntity($gestione, $getGestiones);
             $this->Gestiones->save($gestione);
             //subida de archivos
@@ -661,7 +675,11 @@ class TicketsController extends AppController
                     }
                 }
             }
+            $descripcion = "<b>Ticket N°: ".$id."</b><br><br><b>Comentarios: </b>: ".$this->request->data['comentarios'];
+            $this->correos->enviarcorreo(7, $id,$this->_getUserNameAsig($ticket->user_id),$this->_getUserEmailAsig($ticket->user_id), $descripcion);
         }
+        
+
         $sistemas = $this->Tickets->Sistemas->find('list', ['limit' => 200]);
         $subSistemas = $this->Tickets->SubSistemas->find('list', ['limit' => 200]);
         $users = $this->Tickets->Users->find('list', [ 'keyField' => 'id', 'valueField' => 'username']);
@@ -782,9 +800,12 @@ class TicketsController extends AppController
                             }
                         }
                     }
+                    $id_user = $this->_getUser();
+                    $rs_user = $this->_getUserFull($id_user);
+                    $user = $rs_user->name." ".$rs_user->apellido1." ".$rs_user->apellido2;
 
                     //correo envio
-                    $descripcion = "<b>Ticket N°: ".$id."</b><br><br><b>Comentarios: </b>: ".$this->request->data['comentarios'];
+                    $descripcion = "<b>Ticket N°: ".$id."</b><br><br><b>Cerrado por: </b>".$user."<br><br><b>Comentarios: </b>: ".$this->request->data['comentarios'];
                     //var_dump($this->Tickets); die;
                     $this->correos->enviarcorreo(2, $id,$this->_getUserNameAsig($ticket->user_id),$this->_getUserEmailAsig($ticket->user_id), $descripcion);
                 }
@@ -811,6 +832,10 @@ class TicketsController extends AppController
         $this->loadModel('Users');
         $this->loadModel('correos');
 
+        $id_user = $this->_getUser();
+        $rs_user = $this->_getUserFull($id_user);
+        $user = $rs_user->name;
+
         if(is_numeric($estado) && is_numeric($id)){
             //$this->request->allowMethod(['post', 'delete']);
             $ticket = $this->Tickets->get($id);
@@ -822,7 +847,7 @@ class TicketsController extends AppController
                     //agrego el comentario de gestiones
                     $rs_datos = $this->request->data;
                     $getGestiones['ticket_id'] = $id;
-                    $getGestiones['comentarios'] = $rs_datos['comentarios'];
+                    $getGestiones['comentarios'] = $user." : ".$rs_datos['comentarios'];
 
                     $gestione = $this->Gestiones->patchEntity($gestione, $getGestiones);
                     $this->Gestiones->save($gestione);
@@ -851,14 +876,20 @@ class TicketsController extends AppController
                             }
                         }
                     }
+                    
+                    $user = $rs_user->name." ".$rs_user->apellido1." ".$rs_user->apellido2;
+                    
                     //correo envio
-                    $descripcion = "<b>Ticket N°: ".$id."</b><br><br><b>Comentarios: </b>: ".$this->request->data['comentarios'];
+                   
                     //var_dump($this->Tickets); die;
                     if($estado=='0'){
+                         $descripcion = "<b>Ticket N°: ".$id."</b><br><br><b>Anulado por: </b>".$user."<br><br><b>Comentarios: </b>: ".$this->request->data['comentarios']; 
                         $this->correos->enviarcorreo(3, $id,$this->_getUserNameAsig($ticket->user_asignado_id),$this->_getUserEmailAsig($ticket->user_asignado_id), $descripcion);
                     }elseif($estado=='5'){
+                         $descripcion = "<b>Ticket N°: ".$id."</b><br><br><b>Rechazado por: </b>".$user."<br><br><b>Comentarios: </b>: ".$this->request->data['comentarios']; 
                         $this->correos->enviarcorreo(5, $id,$this->_getUserNameAsig($ticket->user_asignado_id),$this->_getUserEmailAsig($ticket->user_asignado_id), $descripcion);
                     }elseif($estado=='6'){
+                         $descripcion = "<b>Ticket N°: ".$id."</b><br><br><b>Aprobado por: </b>".$user."<br><br><b>Comentarios: </b>: ".$this->request->data['comentarios']; 
                         $this->correos->enviarcorreo(6, $id,$this->_getUserNameAsig($ticket->user_asignado_id),$this->_getUserEmailAsig($ticket->user_asignado_id), $descripcion);
                     }
                 }

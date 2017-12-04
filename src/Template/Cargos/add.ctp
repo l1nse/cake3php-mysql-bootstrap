@@ -10,14 +10,15 @@
     <input type="hidden" name="active" id="active" value="1"> 
     <div class="form-group">
         <legend><?= __('Agregar Cargo') ?></legend>
+        <div class="alert alert-success" role="alert">Los campos marcados con <b>(*)</b> son obligatorios.</div>
         <?php
-            echo $this->Form->control('Nombre', [ "class" => 'form-control', 'id' => 'name', 'name' => 'name', 'required' => true] );
+            echo $this->Form->control('Nombre (*)', [ "class" => 'form-control', 'id' => 'name', 'name' => 'name', 'required' => true] );
             //echo $this->Form->control('area_id',[ "class" => 'form-control', 'id' => 'area_id', 'name' => 'area_id', 'required' => true] );    
         ?>
 
        
         <div class="input select required">
-                <label for="Areas_Empresa">Area</label>
+                <label for="Areas_Empresa">Área (*)</label>
                  <select class="form-control" required="required" id="area_id" name="area_id">
                 <option value=""></option>
                 <?php
@@ -29,7 +30,7 @@
                                     if($row['id'] == $row2['empresa_id'])
                                     {
 
-                                        echo '<option value="'.$row2['id'].'">'.$row['name'].' '.$row2['name']. '</option>';
+                                        echo '<option value="'.$row2['id'].'">'.$row['name'].' => '.$row2['name']. '</option>';
                                     }
                                 }
                         }
@@ -40,11 +41,7 @@
                 </select>
         </div>        
 
-        <div class="form-group">
-                <?php
-                    echo $this->Form->control('Cargo_id', [ 'empty' => true, 'id' => 'cargo_id', 'name' => 'cargo', "class" => 'form-control']);
-                ?>
-        </div>
+      
 
 
     </fieldset>

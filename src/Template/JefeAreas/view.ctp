@@ -3,45 +3,28 @@
   * @var \App\View\AppView $this
   */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Jefe Area'), ['action' => 'edit', $jefeArea->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Jefe Area'), ['action' => 'delete', $jefeArea->id], ['confirm' => __('Are you sure you want to delete # {0}?', $jefeArea->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Jefe Areas'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Jefe Area'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Areas'), ['controller' => 'Areas', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Area'), ['controller' => 'Areas', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Ficha Personales'), ['controller' => 'FichaPersonales', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Ficha Personale'), ['controller' => 'FichaPersonales', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
+
 <div class="jefeAreas view large-9 medium-8 columns content">
-    <h3><?= h($jefeArea->id) ?></h3>
-    <table class="vertical-table">
+    <h3><?= h($jefeArea->ficha_personale->user['name'].' '.$jefeArea->ficha_personale->user['apellido1'].' '.$jefeArea->ficha_personale->user['apellido2'].' ' ) ?></h3>
+    <table class="table table-striped table-bordered">
+      
         <tr>
-            <th scope="row"><?= __('Area') ?></th>
-            <td><?= $jefeArea->has('area') ? $this->Html->link($jefeArea->area->name, ['controller' => 'Areas', 'action' => 'view', $jefeArea->area->id]) : '' ?></td>
+            <th scope="row"><?= __('Área :') ?></th>
+            <td><?= h($jefeArea->area->name.' =>=> '.$jefeArea->area['empresa']['name'])?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Ficha Personale') ?></th>
-            <td><?= $jefeArea->has('ficha_personale') ? $this->Html->link($jefeArea->ficha_personale->name, ['controller' => 'FichaPersonales', 'action' => 'view', $jefeArea->ficha_personale->id]) : '' ?></td>
+            <th scope="row"><?= __('Jefe : ') ?></th>
+            <td><?= h($jefeArea->ficha_personale->user['name'].' '.$jefeArea->ficha_personale->user['apellido1'].' '.$jefeArea->ficha_personale->user['apellido2'].' ' ) ?></td>
         </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($jefeArea->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Active') ?></th>
-            <td><?= $this->Number->format($jefeArea->active) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($jefeArea->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($jefeArea->modified) ?></td>
-        </tr>
+        
+        
+        
     </table>
+</div>
+<hr>
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary" href="<?php echo APP_URI; ?>jefe-areas/index"><i class="glyphicon glyphicon-circle-arrow-left"></i> Volver</a>
+        
+    </div>
 </div>

@@ -7,8 +7,22 @@ use Cake\ORM\Entity;
  * Pasajero Entity
  *
  * @property int $id
- * @property int $cotizacione_id
- * @property string $name
+ * @property int $folio_ficha
+ * @property int $numero_ticket
+ * @property string $nombre1
+ * @property string $nombre2
+ * @property string $apellidop
+ * @property string $apellidom
+ * @property string $rut
+ * @property string $nacionalidad
+ * @property string $origen
+ * @property string $destino
+ * @property string $aerolinea
+ * @property string $cod_pasasje
+ * @property string $aeropuerto_origen
+ * @property string $aeropuerto_destino
+ * @property \Cake\I18n\Time $fecha_hora_salida
+ * @property \Cake\I18n\Time $fecha_hora_llegada
  * @property int $active
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified

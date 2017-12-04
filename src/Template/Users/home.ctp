@@ -40,3 +40,35 @@
 		</a>
 	</div>
 </div>
+     <!-- Modal cancelar reunion -->
+<div  class="modal fade"  id="modalEstado" name="modalEstado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  style="position:absolute;
+  width:440px;
+  height:200px;
+  display:none;
+  z-index:9999;
+  padding:20px;" 
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Cancelar reunión</h4>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" value="<?php echo $calendario->id ?>" name="idcalendario" id="idcalendario">
+        
+          <tr>
+            <td><th scope="row"><?= __('Observación') ?></th></td>
+            <td><textarea class="form-control" name="cancelar" id="cancelar" rows="4" cols="50"></textarea></td>
+            
+        </tr>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" >Cerrar</button>
+        <button type="button" class="btn btn-primary" id="btn_cancelar_reunion" name="btn_cancelar_reunion">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

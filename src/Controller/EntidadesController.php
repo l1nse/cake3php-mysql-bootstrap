@@ -25,8 +25,28 @@ class EntidadesController extends AppController
         */
 
         $entidades = $this->Entidades->find('all')->toArray();        
+        
+        $this->loadModel('RolesPermisos');
+        $rol = $this->_getRol();
+        $permisos = array(94, 72, 122, 71 , 77);
+        $permiso = $this->RolesPermisos->find('all')->where(['RolesPermisos.role_id' => $rol , 'RolesPermisos.permiso_id IN' => $permisos])->toArray();
+        if(isset($permiso) && count($permiso) > 0)
+        {
+            foreach ($permiso as $row ) {
+                $comprueba = $row['permiso_id'];
+                if(in_array($comprueba, $permisos))
+                {
+                    $permisos2[] = $comprueba;
+                }                
+            }
+            //var_dump($permiso); die;        
+        }else
+        {
+            $permisos2[] = 0;
+        }
+        
 
-        $this->set(compact('entidades'));
+        $this->set(compact('entidades','permisos2')) ;
         $this->set('_serialize', ['entidades']);
     }
 
@@ -42,6 +62,7 @@ class EntidadesController extends AppController
         $entidade = $this->Entidades->get($id, [
             'contain' => ['Ciudades', 'Comunas', 'Paises', 'Despachos']
         ]);
+
 
         $this->set('entidade', $entidade);
         $this->set('_serialize', ['entidade']);
@@ -210,7 +231,28 @@ class EntidadesController extends AppController
 
         $rs_entidades = $this->Entidades->find('all')->where(['Entidades.active <>' => '1'])->toArray();
 
+        $this->loadModel('RolesPermisos');
+        $rol = $this->_getRol();
+        $permisos = array(74, 72);
+        $permiso = $this->RolesPermisos->find('all')->where(['RolesPermisos.role_id' => $rol , 'RolesPermisos.permiso_id IN' => $permisos])->toArray();
+        if(isset($permiso) && count($permiso) > 0)
+        {
+            foreach ($permiso as $row ) {
+                $comprueba = $row['permiso_id'];
+                if(in_array($comprueba, $permisos))
+                {
+                    $permisos2[] = $comprueba;
+
+                }                
+            }
+            
+        }else
+        {
+            $permisos2[] = 0;
+        }
+        //var_dump($permisos2); die;        
         $this->set('entidades', $rs_entidades);
+        $this->set('permisos2', $permisos2);
     }
 
 

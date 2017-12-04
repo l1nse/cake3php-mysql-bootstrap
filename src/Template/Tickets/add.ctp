@@ -5,28 +5,8 @@
 ?>
 <?= $this->Html->script('tickets') ?>
 
- <script type="text/javascript" src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
-  <script type="text/javascript">
-  tinymce.init({
-    selector: 'textarea',
-    theme: 'modern',
-    width: "100%",
-    height: "100%",
-    plugins: [
-      'advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker',
-      'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-      'save table contextmenu directionality emoticons template paste textcolor'
-    ],
-    content_css: 'css/content.css',
-    toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons'
-  });
-  </script>
-
-
-
-
     <div class="tickets form large-9 medium-8 columns content">
-        <?= $this->Form->create($ticket, array('class' => 'formulario','enctype' => "multipart/form-data", 'id' => 'frm_add')) ?>
+        <?= $this->Form->create($ticket, array('class' => 'formulario','enctype' => "multipart/form-data", 'id' => 'frm_gestion')) ?>
         
         <input type="hidden" name="active" id="active" value="1"> 
             <input type="hidden" name="sub_sistema_id_hd" id="sub_sistema_id_hd" value="">
@@ -84,11 +64,14 @@
             echo $this->Form->input('adjunto',array( 'type' => 'file'));
         ?>
         </div>
-        <div class="form-group">
-        <?php
-            echo $this->Form->control('descripcion', ["class" => 'form-control', 'required' => true]);
-        ?>
-        </div>
+        
+        <div class="form-group required">
+                <label for="date_time" class="col-2 col-form-label" required="true">Descripción (*)</label>
+                <div class="col-10">
+                    <textarea name="descripcion" class="form-control" required="required" id="descripcion" rows="5"></textarea>
+                </div>
+        </div>        
+        
     </div>
     </fieldset>
     <hr>

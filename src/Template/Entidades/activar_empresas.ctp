@@ -63,9 +63,17 @@
                     <td style="text-align: center;"><?= $estado;  ?></td>
                     <td style="text-align: center;">
                     
+                        <?php if(in_array(74, $permisos2)) {?>
+                            <a class="btn btn-success btn-xs" href="<?php echo APP_URI; ?>Entidades/activar/<?php echo $entidad->id; ?>" data-toggle="tooltip" data-placement="center" title="Activar"><i class="glyphicon glyphicon-ok"></i></a>   
+                        <?php } else { ?>
+                            <a class="btn btn-success btn-xs" disabled href="#" data-toggle="tooltip" data-placement="center" title="Activar"><i class="glyphicon glyphicon-ok"></i></a>   
+                        <?php } ?>
 
-                        <a class="btn btn-success btn-xs" href="<?php echo APP_URI; ?>Entidades/activar/<?php echo $entidad->id; ?>" data-toggle="tooltip" data-placement="center" title="Activar"><i class="glyphicon glyphicon-ok"></i></a>   
-                        <a class="btn btn-warning btn-xs" href="<?php echo APP_URI; ?>Entidades/edit/<?php echo $entidad->id; ?>/2"><i class="glyphicon glyphicon-plus-edit" class="btn_editar_contacto" ><i class="glyphicon glyphicon-edit data-toggle="tooltip" data-placement="center" title="Editar"" clas="modal"></i></a>
+                        <?php if(in_array(72, $permisos2)) { ?>
+                            <a class="btn btn-warning btn-xs" href="<?php echo APP_URI; ?>Entidades/edit/<?php echo $entidad->id; ?>/2"><i class="glyphicon glyphicon-plus-edit" class="btn_editar_contacto" ><i class="glyphicon glyphicon-edit data-toggle="tooltip" data-placement="center" title="Editar"" clas="modal"></i></a>
+                        <?php }else { ?>
+                            <a class="btn btn-warning btn-xs" disabled href="#"><i class="glyphicon glyphicon-plus-edit" class="btn_editar_contacto" ><i class="glyphicon glyphicon-edit data-toggle="tooltip" data-placement="center" title="Editar"" clas="modal"></i></a>
+                        <?php } ?>
 
                         
                     </td>

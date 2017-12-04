@@ -7,7 +7,7 @@ use Cake\ORM\Entity;
  * Cotizacione Entity
  *
  * @property int $id
- * @property int $cotizacione_id
+ * @property int $folio
  * @property int $entidade_id
  * @property int $canal_venta_id
  * @property int $version
@@ -17,10 +17,11 @@ use Cake\ORM\Entity;
  * @property int $user_id
  * @property int $active
  *
- * @property \App\Model\Entity\Cotizacione $cotizacione
  * @property \App\Model\Entity\Entidade $entidade
  * @property \App\Model\Entity\CanalVenta $canal_venta
  * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\ItemCotizacione[] $item_cotizaciones
+ * @property \App\Model\Entity\Pasajero[] $pasajero
  */
 class Cotizacione extends Entity
 {
@@ -36,6 +37,6 @@ class Cotizacione extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'cotizacione_id' => false
+        'id' => false
     ];
 }

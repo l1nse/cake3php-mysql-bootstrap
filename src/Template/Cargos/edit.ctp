@@ -10,9 +10,9 @@
     <?= $this->Form->create($cargo) ?>
     <fieldset>
         <legend><?= __('Editar Cargo') ?></legend>
-
+        <div class="alert alert-success" role="alert">Los campos marcados con <b>(*)</b> son obligatorios.</div>
           <div class="input select required">
-                <label for="Areas_Empresa">Area</label>
+                <label for="Areas_Empresa">Área (*)</label>
                  <select class="form-control" required="required" id="area_id" name="area_id">
                 <option value=" "></option>
                 <?php
@@ -24,7 +24,7 @@
                             if($area_id==$row['id']){
                                 echo '<option value="'.$row['id'].'" selected="selected">'.$row['empresa']['name'].' => ' .$row['name']. '</option>';
                             }else{
-                                echo '<option value="'.$row['id'].'">'.$row['name'].' => '.$row['empresa']['name'].' => ' .$row['name']. '</option>';
+                                echo '<option value="'.$row['id'].'">'.$row['empresa']['name'].' => ' .$row['name']. '</option>';
                             } 
                         }    
                     }
@@ -32,7 +32,7 @@
                 </select>
         </div>        
         <?php
-            echo $this->Form->control('nombre' ,["id" => "empresa_id", "name" => "name", "class" => "form-control", "value" => $cargo['name'], 'required' => true]);
+            echo $this->Form->control('Nombre (*)' ,["id" => "empresa_id", "name" => "name", "class" => "form-control", "value" => $cargo['name'], 'required' => true]);
          //   echo $this->Form->control('area_id',["id" => "area_id", "name" => "area_id", "class" => "form-control", "value" => $cargo['area_id']]);
             
         ?>

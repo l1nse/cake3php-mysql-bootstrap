@@ -45,7 +45,7 @@
     </table>
     <div class="related">
 
-    <h3>Áreas por empresa</h3>
+    <!--<h3>Áreas por empresa</h3> -->
         
         <?php if (!empty($empresa->areas)): ?>
         <table cellpadding="0" cellspacing="0">

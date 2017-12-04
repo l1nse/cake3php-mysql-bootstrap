@@ -49,8 +49,10 @@ class TipoItemsController extends AppController
     public function add()
     {
         $tipoItem = $this->TipoItems->newEntity();
+
         if ($this->request->is('post')) {
             $tipoItem = $this->TipoItems->patchEntity($tipoItem, $this->request->getData());
+            //var_dump($this->request->getData()); die;
             if ($this->TipoItems->save($tipoItem)) {
                 $this->Flash->success(__('The tipo item has been saved.'));
 
@@ -86,6 +88,53 @@ class TipoItemsController extends AppController
         $this->set(compact('tipoItem'));
         $this->set('_serialize', ['tipoItem']);
     }
+
+     public function anular($id = null)
+    {
+        $rs_item = $this->TipoItems->get($id,[
+            'contain' => []
+        ]);
+        //var_dump($this->Users->get($id)); die;
+
+        if(is_numeric($id))
+        {
+            $rs_active['active'] = 2; 
+
+            $rs_item = $this->TipoItems->patchEntity($rs_item, $rs_active);
+
+                if ($this->TipoItems->save($rs_item)) {
+                    $this->Flash->success(__('La entidad fue desactivada correctamente.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->success(__('Por favor intente nuevamente!.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    public function activar($id = null)
+         {
+            $rs_item = $this->TipoItems->get($id,[
+                'contain' => []
+            ]);
+            //var_dump($this->Users->get($id)); die;
+
+            if(is_numeric($id))
+            {
+                $rs_active['active'] = 1; 
+
+                $rs_item = $this->TipoItems->patchEntity($rs_item, $rs_active);
+
+                    if ($this->TipoItems->save($rs_item)) {
+                        $this->Flash->success(__('La entidad fue activada correctamente.'));
+
+                        return $this->redirect(['action' => 'index']);
+                    }
+                    $this->Flash->success(__('Por favor intente nuevamente!.'));
+             }
+            return $this->redirect(['action' => 'index']);
+        }
 
     /**
      * Delete method

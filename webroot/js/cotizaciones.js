@@ -1,34 +1,5 @@
 $(document).ready(function() {
 
-	//$(".divcotizacion").hide();
-
-	$("#btn_modal_entidade").click(function(event) {
-
-		$("#modalCliente").modal("show");
-		/*var rut = $('#rut').val();
-
-		if(rut==''){
-			mostrarAlerta('Favor debe ingresar un rut correcto!',"remove");
-			return false;
-		}else{
-			var url = siteurl+"cotizaciones/list_auxiliar";
-
-			$.ajax({
-		        url: url,
-		        dataType: "json",
-		        method: "POST",
-		        data: {rut : rut}
-		      }).done(function(json) {
-		        if(json.result){
-		          //$("#sub-sistema-id").html(json.html);
-		          //$("#myModal").modal("hide");
-		          window.location = window.location;
-		          //mostrarAlerta('Se agrego contacto correctamente!.',"ok"); 
-		        }
-		      });
-		}*/
-	});
-
 	$("#btn_buscar_entidade").click(function(event) {
 
 		$("#divResultado").html('<center><img src="'+siteurl+'img/load.gif" alt="Cargando"></center>');
@@ -55,67 +26,63 @@ $(document).ready(function() {
 		}
 	});
 
-	$("#btn_add_pasajero").click(function(event) {
 
-		$("#divPasajeros").html('<center><img src="'+siteurl+'img/load.gif" alt="Cargando"></center>');
-		var nombre_pasajero = $("#nombre_pasajero").val();
+	var table = $('.data-table-index').DataTable( {
+	    "bLengthChange": false,
+	    "bFilter": true,
+	    "pagingType": "numbers",
+	    "order": [[ 1, "desc" ]],
+	    "pageLength": 10,
+	    //"dom": '<"top"ip><"toolbar">rt<"bottom"ip><"clear">',
+	    "language": {
+	      "processing":    "Procesando...",
+	      "lengthMenu":    "Mostrar _MENU_ tickets",
+	      "zeroRecords":   "No se encontraron resultados",
+	      "emptyTable":    "Ningún dato disponible en esta tabla",
+	      "info":          "Mostrando tickets del _START_ al _END_ de un total de _TOTAL_ tickets",
+	      "infoEmpty":     "Mostrando tickets del 0 al 0 de un total de 0 tickets",
+	      "infoFiltered":  "(filtrado de un total de _MAX_ tickets)",
+	      "sSearch"     : "Buscar",
+	    }
+	  });
 
-		if(nombre_pasajero==''){
-			$("#divPasajeros").html('');
-			return false;
-		}else{
-			var url = siteurl+"cotizaciones/list_pasajeros";
+		$('.data-table-index tbody').on('click', 'td.details-control', function () {
+      var tr = $(this).closest('tr');
+      var row = table.row( tr );
+      var id_table = $(this).attr("id");
 
-			$.ajax({
-				url: url,
-				dataType: "json",
-				method: "POST",
-				data: {nombre_pasajero : nombre_pasajero}
-			}).done(function(json) {
-				if(json.result){
-					$("#nombre_pasajero").val('');
-					$("#divPasajeros").html(json.html);
-				}else{
-					$("#divPasajeros").html('<div class="alert alert-warning" role="alert"><center><b>'+json.debug+'</b></center></div>');
-				}
-			});
-		}
-	});
+      if ( row.child.isShown() ) {
+        $(this).find('i').removeClass('glyphicon-menu-up').addClass('glyphicon-menu-down');
+          row.child.hide();
+          tr.removeClass('shown');
+      }
+      else {
+          $(this).find('i').removeClass('glyphicon-menu-down').addClass('glyphicon-menu-up');
+          row.child('<center><button class="btn btn-primary"><i class="fa fa-circle-o-notch fa-spin"></i> Cargando...</center></button>').show();
+          var url = siteurl+"cotizaciones/list_versiones";
+          $.ajax({
+            url: url,
+            dataType: "json",
+            method: "POST",
+            data: { folio: id_table }
+          }).done(function(json) {
+            if(json.result){
+              row.child(json.html).show();
+            }
+          });
 
-	$("#btn_add_item").click(function(event) {
-		$("#divItems").html('<center><img src="'+siteurl+'img/load.gif" alt="Cargando"></center>');
-		var tipo_item 		= $("#tipo_item").val();
-		var tipo_cambio 	= $("#tipo_cambio").val();
-		var valor 			= $("#valor").val();
-		var descripcion	 	= $("#descripcion").val();
+          tr.addClass('shown');
+      }
+  });
 
-		var validator = $( "#form_item" ).validate();
-    	validator.form();
-
-	    //valido si el formulario esta ok
-	    if(!validator.valid()){
-	      //console.log('entro');
-	      mostrarAlerta('Rellene los campos obligatorios.',"remove"); 
-	    }else{
-	    	event.preventDefault();
-    		tinyMCE.triggerSave();
-			var url = siteurl+"cotizaciones/add_items";
-
-			$.ajax({
-				url: url,
-				dataType: "json",
-				method: "POST",
-				data: {tipo_item : tipo_item, tipo_cambio: tipo_cambio, valor: valor, descripcion: descripcion}
-			}).done(function(json) {
-				if(json.result){
-					$("#valor").val('');
-					$("#divItems").html(json.html);
-				}else{
-					$("#divItems").html('<div class="alert alert-warning" role="alert"><center><b>'+json.debug+'</b></center></div>');
-				}
-			});
-		}
-	});
+		$("#btn_step_1").click(function(event) {
+			var cod_aux = $("#cod_aux").val();
+			if(cod_aux==''){
+				mostrarAlerta('Debe seleccionar el cliente a cotizar', 'error');
+			}else{
+				$("#form_add").attr('action', siteurl+'cotizaciones/add2').submit();
+			}
+		});
 
 });
 
@@ -135,48 +102,7 @@ function mostrarAlerta(texto,tipo){
 function cargarCliente(CodAux, RutAux, NomAux){
 	$("#cod_aux").val(CodAux);
 	$("#rut_aux").val(RutAux);
-	$("#nombre_aux").val(NomAux);
+	$("#nom_aux").val(NomAux);
+	$("#form_add").submit();
 
-	$("#modalCliente").modal("hide");
-	$("#divResultado").html('');
-	$("#nombre").val('');
-	$(".divcotizacion").show();
-}
-
-function delPasajero(id){
-	$("#divPasajeros").html('<center><img src="'+siteurl+'img/load.gif" alt="Cargando"></center>');
-
-	var url = siteurl+"cotizaciones/del_pasajeros";
-
-	$.ajax({
-		url: url,
-		dataType: "json",
-		method: "POST",
-		data: {id : id}
-	}).done(function(json) {
-		if(json.result){
-		  $("#divPasajeros").html(json.html);
-		}else{
-			$("#divPasajeros").html('<div class="alert alert-warning" role="alert"><center><b>'+json.debug+'</b></center></div>');
-		}
-	});
-}
-
-function delItem(id){
-	$("#divItems").html('<center><img src="'+siteurl+'img/load.gif" alt="Cargando"></center>');
-
-	var url = siteurl+"cotizaciones/del_items";
-
-	$.ajax({
-		url: url,
-		dataType: "json",
-		method: "POST",
-		data: {id : id}
-	}).done(function(json) {
-		if(json.result){
-		  $("#divItems").html(json.html);
-		}else{
-			$("#divItems").html('<div class="alert alert-warning" role="alert"><center><b>'+json.debug+'</b></center></div>');
-		}
-	});
 }

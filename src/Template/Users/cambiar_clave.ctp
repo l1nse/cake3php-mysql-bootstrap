@@ -24,7 +24,7 @@
     <hr>
     <div class="row">
         <div class="col-md-6">
-            <a class="btn btn-danger" href="<?php echo APP_URI; ?>users/index/">Cancelar</a>
+            <a class="btn btn-danger" href="<?php echo APP_URI; ?>tickets/home/">Cancelar</a>
             <!--<a class="btn btn-info" href="<?php echo APP_URI; ?>tickets/delete/<?php echo $ticket->id; ?>/3" >Cerrar</a>-->
         </div>
         <div class="col-md-1 col-md-offset-5">

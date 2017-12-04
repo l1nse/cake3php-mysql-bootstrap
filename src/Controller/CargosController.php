@@ -76,7 +76,7 @@ class CargosController extends AppController
                         ->contain([])->toArray();
 
         $areas = $this->Cargos->Areas->find('all')
-                        ->contain([])->toArray();
+                        ->contain([])->where(['Areas.active' => 1])->toArray();
 
         
 
@@ -157,8 +157,8 @@ class CargosController extends AppController
             }
             $this->Flash->error(__('The cargo could not be saved. Please, try again.'));
         }
-        $areas = $this->Areas->find('all')
-                        ->contain(['Empresas'])->toArray();
+        $areas = $this->Cargos->Areas->find('all')
+                        ->contain(['Empresas'])->where(['Areas.active' => 1])->toArray();
 
         //$areas = $this->Cargos->Areas->find('all')->contain([])->toArray();
 

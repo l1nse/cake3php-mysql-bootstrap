@@ -18,7 +18,7 @@ class TipoCambiosController extends AppController
      */
     public function index()
     {
-        $tipoCambios = $this->paginate($this->TipoCambios);
+        $tipoCambios =  $this->TipoCambios->find('all');
 
         $this->set(compact('tipoCambios'));
         $this->set('_serialize', ['tipoCambios']);
@@ -86,6 +86,54 @@ class TipoCambiosController extends AppController
         $this->set(compact('tipoCambio'));
         $this->set('_serialize', ['tipoCambio']);
     }
+
+     public function anular($id = null)
+    {
+        $rs_cambio = $this->TipoCambios->get($id,[
+            'contain' => []
+        ]);
+        //var_dump($this->Users->get($id)); die;
+
+        if(is_numeric($id))
+        {
+            $rs_active['active'] = 2; 
+
+            $rs_cambio = $this->TipoCambios->patchEntity($rs_cambio, $rs_active);
+
+                if ($this->TipoCambios->save($rs_cambio)) {
+                    $this->Flash->success(__('La entidad fue desactivada correctamente.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->success(__('Por favor intente nuevamente!.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    public function activar($id = null)
+         {
+            $rs_cambio = $this->TipoCambios->get($id,[
+                'contain' => []
+            ]);
+            //var_dump($this->Users->get($id)); die;
+
+            if(is_numeric($id))
+            {
+                $rs_active['active'] = 1; 
+
+                $rs_cambio = $this->TipoCambios->patchEntity($rs_cambio, $rs_active);
+
+                    if ($this->TipoCambios->save($rs_cambio)) {
+                        $this->Flash->success(__('La entidad fue activada correctamente.'));
+
+                        return $this->redirect(['action' => 'index']);
+                    }
+                    $this->Flash->success(__('Por favor intente nuevamente!.'));
+             }
+            return $this->redirect(['action' => 'index']);
+        }
+
 
     /**
      * Delete method

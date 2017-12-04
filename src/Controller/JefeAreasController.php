@@ -19,8 +19,14 @@ class JefeAreasController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Areas', 'FichaPersonales']
+            'contain' => ['Areas', 'FichaPersonales' => array('Users')]
         ];
+
+        
+
+
+        
+
         $jefeAreas = $this->paginate($this->JefeAreas);
 
         $this->set(compact('jefeAreas'));
@@ -37,7 +43,7 @@ class JefeAreasController extends AppController
     public function view($id = null)
     {
         $jefeArea = $this->JefeAreas->get($id, [
-            'contain' => ['Areas', 'FichaPersonales']
+            'contain' => ['Areas' =>  array('Empresas'), 'FichaPersonales' => array('Users'),]
         ]);
 
         $this->set('jefeArea', $jefeArea);
@@ -53,7 +59,25 @@ class JefeAreasController extends AppController
     {
         $jefeArea = $this->JefeAreas->newEntity();
         if ($this->request->is('post')) {
+
             $jefeArea = $this->JefeAreas->patchEntity($jefeArea, $this->request->getData());
+
+            $ficha =  $this->_getFichaFull($this->request->getData('users'));
+            //var_dump($ficha); die;
+
+            $usuario = $this->_getUserNameAsig($ficha->user_id);
+             //var_dump($usuario); die;
+
+              $name['name'] = $usuario; 
+              $id_ficha['ficha_personale_id'] = $ficha->id;
+
+
+                //Le pasamos los datos recogidos a ficha personal
+                $jefeArea = $this->JefeAreas->patchEntity($jefeArea, $name);    
+                $jefeArea = $this->JefeAreas->patchEntity($jefeArea, $id_ficha);
+
+
+
             if ($this->JefeAreas->save($jefeArea)) {
                 $this->Flash->success(__('The jefe area has been saved.'));
 
@@ -61,9 +85,14 @@ class JefeAreasController extends AppController
             }
             $this->Flash->error(__('The jefe area could not be saved. Please, try again.'));
         }
-        $areas = $this->JefeAreas->Areas->find('list', ['limit' => 200]);
+        $this->loadModel('Cargos');
+        $areas = $this->Cargos->Areas->find('all')->contain(['Empresas'])->where(['Areas.active' => 1])->toArray();
+        
         $fichaPersonales = $this->JefeAreas->FichaPersonales->find('list', ['limit' => 200]);
-        $this->set(compact('jefeArea', 'areas', 'fichaPersonales'));
+
+        $this->loadModel('Users');
+        $users = $this->Users->find('all')->contain(['FichaPersonales'])->where(['active' => 1])->order(['name' => 'ASC'])->toArray();
+        $this->set(compact('jefeArea', 'areas', 'fichaPersonales','users'));
         $this->set('_serialize', ['jefeArea']);
     }
 
@@ -77,10 +106,19 @@ class JefeAreasController extends AppController
     public function edit($id = null)
     {
         $jefeArea = $this->JefeAreas->get($id, [
-            'contain' => []
+            'contain' => [ 'Areas' , 'FichaPersonales' => array('Users')]
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+
+            //var_dump($this->request->getData()); die;
+
             $jefeArea = $this->JefeAreas->patchEntity($jefeArea, $this->request->getData());
+
+            //$this->loadModel('FichaPersonales');
+            //$fichaPersonales = $this->FichaPersonales->find('all')->where([$this->request->getData('users') == $fichaPersonales->user_id ]);
+            //var_dump($fichaPersonales[''] ); die;
+                
+
             if ($this->JefeAreas->save($jefeArea)) {
                 $this->Flash->success(__('The jefe area has been saved.'));
 
@@ -88,9 +126,21 @@ class JefeAreasController extends AppController
             }
             $this->Flash->error(__('The jefe area could not be saved. Please, try again.'));
         }
-        $areas = $this->JefeAreas->Areas->find('list', ['limit' => 200]);
-        $fichaPersonales = $this->JefeAreas->FichaPersonales->find('list', ['limit' => 200]);
-        $this->set(compact('jefeArea', 'areas', 'fichaPersonales'));
+        // $areas = $this->JefeAreas->Areas->find('list', ['limit' => 200]);
+
+        $this->loadModel('Cargos');
+        $empresas = $this->Cargos->Areas->Empresas->find('all')
+                        ->contain([])->toArray();
+
+        $areas = $this->Cargos->Areas->find('all')->contain(['Empresas'])->where(['Areas.active' => 1])->toArray();
+
+        //$fichaPersonales = $this->JefeAreas->FichaPersonales->find('all');
+
+        $this->loadModel('Users');
+        $users = $this->Users->find('all')->where(['active' => 1])->order(['name' => 'ASC'])->toArray();
+         
+
+        $this->set(compact('jefeArea', 'areas', 'users' , 'empresas'));
         $this->set('_serialize', ['jefeArea']);
     }
 
